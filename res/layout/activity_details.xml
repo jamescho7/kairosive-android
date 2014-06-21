@@ -4,33 +4,53 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/activity_details_label_textView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp"
-        android:text="activity details"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:layout_marginTop="14dp" >
 
-    <TextView
-        android:id="@+id/activity_name_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="activity name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/activity_details_label_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="activity details"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/start_time_label_textView"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/activity_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp"
-        android:text="start time"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:layout_marginTop="14dp" >
+
+        <TextView
+            android:id="@+id/start_time_label_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="onEditClick"
+            android:text="start time"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/edit_start_time"
+            android:layout_width="22sp"
+            android:layout_height="22sp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/start_time_label_textView"
+            android:onClick="onEditClick"
+            android:src="@drawable/edit_button" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/start_date_textView"
@@ -48,15 +68,32 @@
         android:text="01:01:01 PM"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/end_time_label_textView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp"
-        android:text="end time"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:layout_marginTop="14dp" >
+
+        <TextView
+            android:id="@+id/end_time_label_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="onEditClick"
+            android:text="end time"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/edit_end_time"
+            android:layout_width="22sp"
+            android:layout_height="22sp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/end_time_label_textView"
+            android:onClick="onEditClick"
+            android:src="@drawable/edit_button" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/end_date_textView"
@@ -74,15 +111,32 @@
         android:text="01:01:01 PM"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/details_label_textView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="14dp"
-        android:text="details"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:layout_marginTop="14dp" >
+
+        <TextView
+            android:id="@+id/details_label_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="onEditClick"
+            android:text="details"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/edit_details"
+            android:layout_width="22sp"
+            android:layout_height="22sp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/details_label_textView"
+            android:onClick="onEditClick"
+            android:src="@drawable/edit_button" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/details_textView"

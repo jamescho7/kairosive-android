@@ -169,10 +169,6 @@ public class ActivityPojo implements Serializable, Comparable<ActivityPojo> {
 		boolean anotherIsAM = another.getStart_time().substring(9, 11)
 				.equals("am") ? true : false;
 
-		System.out.printf("COMPARING %d:%d:%d:%s to %d:%d:%d:%s\n", mHour,
-				mMinutes, mSeconds, mIsAM, anotherHour, anotherMinutes,
-				anotherSeconds, anotherIsAM);
-
 		if (mIsAM != anotherIsAM) {
 			return mIsAM ? -1 : 1;
 		}
@@ -193,4 +189,11 @@ public class ActivityPojo implements Serializable, Comparable<ActivityPojo> {
 
 	}
 
+	public ActivityPojo clone() {
+		ActivityPojo activity = new ActivityPojo(this.mCategory_id,
+				this.mStart_date, this.mStart_time, this.mEnd_date,
+				this.mEnd_time, this.mDetails);
+		activity.setId(getId());
+		return activity;
+	}
 }

@@ -1,7 +1,13 @@
 package com.kairosive.kairosive.database;
 
-public class ActivityPojo {
+import java.io.Serializable;
 
+public class ActivityPojo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5362382541309833581L;
 	private int mId;
 	private int mCategory_id;
 	private String mCategory_str;

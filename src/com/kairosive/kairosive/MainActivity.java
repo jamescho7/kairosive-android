@@ -25,7 +25,7 @@ import com.kairosive.kairosive.database.ActivityPojo;
 import com.kairosive.kairosive.database.DatabaseHandler;
 
 public class MainActivity extends Activity {
-	public static DatabaseHandler db;
+	public DatabaseHandler db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		db = new DatabaseHandler(this);
+		db = DatabaseHandler.getInstance(this);
 	}
 
 	/*

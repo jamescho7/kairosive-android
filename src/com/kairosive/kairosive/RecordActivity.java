@@ -78,7 +78,7 @@ public class RecordActivity extends Activity {
 
 	public void insertActivity() {
 		if (db == null) {
-			db = MainActivity.db;
+			db = DatabaseHandler.getInstance(this);
 		}
 
 		if (alreadyRecorded) {
@@ -95,7 +95,7 @@ public class RecordActivity extends Activity {
 
 	public void deleteActivity() {
 		if (db == null) {
-			db = new DatabaseHandler(getApplicationContext());
+			db = DatabaseHandler.getInstance(this);
 		}
 		ActivityPojo currentAct = new ActivityPojo(position,
 				formattedStartDate, formattedStartTime, getDate(0),

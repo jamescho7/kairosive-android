@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-
+	private static DatabaseHandler db;
 	// Database Version
 	private static final int DATABASE_VERSION = 1;
 
@@ -34,6 +34,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
+	public static DatabaseHandler getInstance(Context context) {
+		if (db == null) {
+			db = new DatabaseHandler(context);
+		}
+		return db;
+	}
+	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_ACTIVITIES + "("
@@ -153,8 +160,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				new String[] { String.valueOf(activity.getId()) });
 		db.close();
 	}
-	
+
 	public void modifyActivity(ActivityPojo activity, ActivityPojo replacement) {
-		
+
 	}
 }

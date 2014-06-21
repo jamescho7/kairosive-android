@@ -37,7 +37,7 @@ public class LogActivity extends FragmentActivity {
 	private int currentMonth;
 	private int currentDate;
 
-	private List<ActivityPojo> activities = new ArrayList<ActivityPojo>();
+	private List<ActivityPojo> allActivities = new ArrayList<ActivityPojo>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class LogActivity extends FragmentActivity {
 		getWindow().setFormat(PixelFormat.RGBA_8888);
 		setContentView(R.layout.activity_log);
 
-		db = MainActivity.db;
+		db = DatabaseHandler.getInstance(this);
 		c = Calendar.getInstance();
 		onUpdate(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
 				c.get(Calendar.DATE));
@@ -66,6 +66,8 @@ public class LogActivity extends FragmentActivity {
 					int position, long id) {
 				Intent intent = new Intent(LogActivity.this,
 						DetailsActivity.class);
+				intent.putExtra("SELECTED_ACTIVITY", allActivities.get(position));
+				startActivityForResult(intent, 0);
 			}
 
 		});
@@ -74,7 +76,7 @@ public class LogActivity extends FragmentActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				ActivityPojo act = activities.remove(position);
+				ActivityPojo act = allActivities.remove(position);
 				db.deleteActivity(act);
 				onUpdate(year, month, date);
 
@@ -110,7 +112,7 @@ public class LogActivity extends FragmentActivity {
 		for (ActivityPojo act : activities) {
 			if (desiredDate.equals(act.getStart_date())) {
 				acts.add(act.toString());
-				activities.add(act);
+				allActivities.add(act);
 			}
 		}
 		String[] result = new String[acts.size()];

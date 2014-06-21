@@ -30,7 +30,7 @@ public class SummaryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_summary);
-		db = MainActivity.db;
+		db = DatabaseHandler.getInstance(this);
 		List<ActivityPojo> activities = db.getAllActivities();
 		Intent intent = getIntent();
 		int year = intent.getIntExtra("com.jamescho.kairosive.year", 2011);

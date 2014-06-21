@@ -66,27 +66,14 @@ public class LogActivity extends FragmentActivity {
 					int position, long id) {
 				Intent intent = new Intent(LogActivity.this,
 						DetailsActivity.class);
-				intent.putExtra("SELECTED_ACTIVITY", allActivities.get(position));
+				intent.putExtra("SELECTED_POSITION", position);
+				intent.putExtra("SELECTED_ACTIVITY",
+						allActivities.get(position));
 				startActivityForResult(intent, 0);
 			}
 
 		});
-		actsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View v,
-					int position, long id) {
-				ActivityPojo act = allActivities.remove(position);
-				db.deleteActivity(act);
-				onUpdate(year, month, date);
-
-				Toast.makeText(getApplicationContext(), "Deleted 1 Activity",
-						Toast.LENGTH_SHORT).show();
-
-				// Consider adding Undo
-				return true;
-			}
-		});
 		actsList = getActivities(getDate(year, month, date));
 		arrayAdapter = new ArrayAdapter<String>(this,
 				R.layout.simple_list_item, actsList);
@@ -96,6 +83,32 @@ public class LogActivity extends FragmentActivity {
 		c.set(year, month, date);
 		tv = (TextView) findViewById(R.id.date);
 		tv.setText(getDayAsString(month, date, c.get(Calendar.DAY_OF_WEEK)));
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		switch (resultCode) {
+		case DetailsActivity.RESULT_UPDATE:
+			ActivityPojo updatedActivity = (ActivityPojo) intent
+					.getSerializableExtra("UPDATED_ACTIVITY");
+			db.updateActivity(updatedActivity);
+			onUpdate(currentYear, currentMonth, currentDate);
+
+			Toast.makeText(getApplicationContext(), "Updated 1 Activity",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case DetailsActivity.RESULT_DELETE:
+			int position = intent.getIntExtra("SELECTED_POSITION", -1);
+			ActivityPojo act = allActivities.remove(position);
+			db.deleteActivity(act);
+			onUpdate(currentYear, currentMonth, currentDate);
+
+			Toast.makeText(getApplicationContext(), "Deleted 1 Activity",
+					Toast.LENGTH_SHORT).show();
+			break;
+		}
+
 	}
 
 	public void summary(View v) {

@@ -65,6 +65,9 @@
         <activity
             android:name="com.kairosive.kairosive.DetailsActivity"
             android:label="@string/title_activity_details" >
+              <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kairosive.kairosive.LogActivity" />
         </activity>
     </application>
 

@@ -40,7 +40,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 		return db;
 	}
-	
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_ACTIVITIES + "("
@@ -161,7 +161,4 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
-	public void modifyActivity(ActivityPojo activity, ActivityPojo replacement) {
-
-	}
 }

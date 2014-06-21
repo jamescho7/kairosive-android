@@ -1,7 +1,9 @@
-package com.kairosive.kairosive.database;
+package com.kairosive.database;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.kairosive.utils.Constants;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +11,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * An interface to the database accessible as a Singleton by any other class. Handles all low-level SQL queries. 
+ * @author James Cho
+ *
+ */
 public class DatabaseHandler extends SQLiteOpenHelper {
 	private static DatabaseHandler db;
 	// Database Version

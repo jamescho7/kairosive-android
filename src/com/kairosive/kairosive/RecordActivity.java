@@ -17,9 +17,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kairosive.kairosive.database.ActivityPojo;
-import com.kairosive.kairosive.database.Constants;
-import com.kairosive.kairosive.database.DatabaseHandler;
+import com.kairosive.database.ActivityPojo;
+import com.kairosive.database.DatabaseHandler;
+import com.kairosive.utils.Constants;
+import com.kairosive.utils.KSTimeUtils;
 
 public class RecordActivity extends Activity {
 	private boolean alreadyRecorded;
@@ -125,9 +126,11 @@ public class RecordActivity extends Activity {
 		date = calendar.get(Calendar.DATE);
 
 		if (selector == 0) {
-			return year + "/" + formatted(month) + "/" + formatted(date);
+			return year + "/" + KSTimeUtils.numToTwoCharString(month) + "/"
+					+ KSTimeUtils.numToTwoCharString(date);
 		} else {
-			return formatted(month) + "/" + formatted(date) + "/" + year;
+			return KSTimeUtils.numToTwoCharString(month) + "/"
+					+ KSTimeUtils.numToTwoCharString(date) + "/" + year;
 		}
 
 	}
@@ -250,19 +253,12 @@ public class RecordActivity extends Activity {
 		}
 
 		if (selector == 0) {
-			return formatted(hour) + ":" + formatted(min) + ":"
-					+ formatted(sec) + ":" + meridiem;
+			return KSTimeUtils.numToTwoCharString(hour) + ":"
+					+ KSTimeUtils.numToTwoCharString(min) + ":"
+					+ KSTimeUtils.numToTwoCharString(sec) + ":" + meridiem;
 		}
-		return formatted(hour) + ":" + formatted(min) + " " + meridiem;
-
-	}
-
-	private String formatted(int min) {
-		if (min < 10) {
-			return "0" + min;
-		} else {
-			return "" + min;
-		}
+		return KSTimeUtils.numToTwoCharString(hour) + ":"
+				+ KSTimeUtils.numToTwoCharString(min) + " " + meridiem;
 
 	}
 

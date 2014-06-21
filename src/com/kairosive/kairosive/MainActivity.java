@@ -21,18 +21,28 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.kairosive.kairosive.database.ActivityPojo;
-import com.kairosive.kairosive.database.DatabaseHandler;
+import com.kairosive.database.ActivityPojo;
+import com.kairosive.database.DatabaseHandler;
 
+/**
+ * The Starting Activity of the Kairosive Android Application.
+ * @author James Cho
+ */
 public class MainActivity extends Activity {
 	public DatabaseHandler db;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setFormat(PixelFormat.RGBA_8888);
 		setContentView(R.layout.activity_main);
 
+		// Sets up a Grid of Icons representing various categories.
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new ImageAdapter(getApplicationContext()));
 		gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -48,8 +58,9 @@ public class MainActivity extends Activity {
 		db = DatabaseHandler.getInstance(this);
 	}
 
-	/*
-	 * Debug Only
+	/**
+	 * Logs all ActivityPojo objects stored currently in the database. Used for
+	 * debugging purposes.
 	 */
 	@SuppressWarnings("unused")
 	private void databaseTest() {
@@ -66,6 +77,11 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -73,6 +89,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
@@ -89,6 +110,9 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Exports database sqlite3 file to the File System.
+	 */
 	@SuppressWarnings("resource")
 	private void downloadDatabase() {
 		try {
@@ -111,10 +135,8 @@ public class MainActivity extends Activity {
 					dst.close();
 
 					CharSequence text = "Success. Exported file to SD card!";
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(getApplicationContext(), text,
-							duration);
-					toast.show();
+					Toast.makeText(getApplicationContext(), text,
+							Toast.LENGTH_SHORT).show();
 
 					Uri u1 = null;
 					u1 = Uri.fromFile(backupDB);
@@ -128,10 +150,8 @@ public class MainActivity extends Activity {
 
 				} else {
 					CharSequence text = "No database file found!";
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(getApplicationContext(), text,
-							duration);
-					toast.show();
+					Toast.makeText(getApplicationContext(), text,
+							Toast.LENGTH_SHORT).show();
 
 				}
 			}

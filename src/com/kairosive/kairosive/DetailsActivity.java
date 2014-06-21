@@ -1,5 +1,12 @@
 package com.kairosive.kairosive;
 
+import static com.kairosive.utils.KSTimeUtils.isAM;
+import static com.kairosive.utils.KSTimeUtils.isValid;
+import static com.kairosive.utils.KSTimeUtils.parseHours;
+import static com.kairosive.utils.KSTimeUtils.parseMinutes;
+import static com.kairosive.utils.KSTimeUtils.time24ToString;
+import static com.kairosive.utils.KSTimeUtils.to24HourClock;
+import static com.kairosive.utils.KSTimeUtils.formatTime;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -10,16 +17,16 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import com.kairosive.kairosive.database.ActivityPojo;
-import com.kairosive.kairosive.database.Constants;
+import com.kairosive.database.ActivityPojo;
+import com.kairosive.utils.Constants;
+import com.kairosive.utils.KSTimeUtils.Format;
 
 public class DetailsActivity extends FragmentActivity {
 
@@ -30,15 +37,11 @@ public class DetailsActivity extends FragmentActivity {
 	private ActivityPojo receivedActivity;
 	private ActivityPojo updatedActivity;
 
-	// private TextView activityLabel;
-	// private TextView startLabel;
 	private Spinner activitySpinner;
 	private TextView startDate;
-	private TextView startTime;
-	// private TextView endLabel;
+	private TextView startTimeTv;
 	private TextView endDate;
-	private TextView endTime;
-	// private TextView detailsLabel;
+	private TextView endTimeTv;
 	private TextView details;
 
 	@Override
@@ -52,18 +55,31 @@ public class DetailsActivity extends FragmentActivity {
 		populateTextViews();
 	}
 
+	/**
+	 * @param view
+	 */
 	public void onEditClick(View view) {
 		int id = view.getId();
 		switch (id) {
 		case R.id.edit_start_time:
 		case R.id.start_time_label_textView:
+
 			DialogFragment newFragment = new TimePickerFragment();
+			((TimePickerFragment) newFragment).init(startTimeTv,
+					updatedActivity,
+					parseHours(updatedActivity.getStart_time()),
+					parseMinutes(updatedActivity.getStart_time()),
+					isAM(updatedActivity.getStart_time()));
 			newFragment.show(getSupportFragmentManager(), "TimePicker");
 			break;
 
 		case R.id.edit_end_time:
 		case R.id.end_time_label_textView:
 			DialogFragment newFragment2 = new TimePickerFragment();
+			((TimePickerFragment) newFragment2).init(endTimeTv,
+					updatedActivity, parseHours(updatedActivity.getEnd_time()),
+					parseMinutes(updatedActivity.getEnd_time()),
+					isAM(updatedActivity.getEnd_time()));
 			newFragment2.show(getSupportFragmentManager(), "TimePicker");
 			break;
 
@@ -77,21 +93,18 @@ public class DetailsActivity extends FragmentActivity {
 
 	private void populateTextViews() {
 
-		// activityLabel = (TextView)
-		// findViewById(R.id.activity_details_label_textView);
-		// startLabel = (TextView) findViewById(R.id.start_time_label_textView);
 		startDate = (TextView) findViewById(R.id.start_date_textView);
-		startTime = (TextView) findViewById(R.id.start_time_textView);
-		// endLabel = (TextView) findViewById(R.id.end_time_label_textView);
+		startTimeTv = (TextView) findViewById(R.id.start_time_textView);
 		endDate = (TextView) findViewById(R.id.end_date_textView);
-		endTime = (TextView) findViewById(R.id.end_time_textView);
-		// detailsLabel = (TextView) findViewById(R.id.details_label_textView);
+		endTimeTv = (TextView) findViewById(R.id.end_time_textView);
 		details = (TextView) findViewById(R.id.details_textView);
 
 		startDate.setText(receivedActivity.getStart_date());
-		startTime.setText(receivedActivity.getStart_time());
+		startTimeTv.setText(formatTime(Format.REMOVE_SECONDS,
+				receivedActivity.getStart_time()));
 		endDate.setText(receivedActivity.getEnd_date());
-		endTime.setText(receivedActivity.getEnd_time());
+		endTimeTv.setText(formatTime(Format.REMOVE_SECONDS,
+				receivedActivity.getEnd_time()));
 		details.setText(receivedActivity.getDetails().equals("") ? "none"
 				: receivedActivity.getDetails());
 		populateSpinner();
@@ -113,6 +126,19 @@ public class DetailsActivity extends FragmentActivity {
 	public void onUpdate(View v) {
 		updatedActivity.setCategory_id(activitySpinner
 				.getSelectedItemPosition());
+
+		if (!isValid(updatedActivity.getStart_time(),
+				updatedActivity.getEnd_time())) {
+			
+			System.out.println(updatedActivity.getStart_time());
+			System.out.println(updatedActivity.getEnd_time());
+			
+			Toast.makeText(getApplicationContext(),
+					"Update Failed: End Time must be later than Start Time!",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+
 		receivedActivity = updatedActivity;
 		Intent intent = new Intent();
 		intent.putExtra("UPDATED_ACTIVITY", receivedActivity);
@@ -130,37 +156,37 @@ public class DetailsActivity extends FragmentActivity {
 	public static class TimePickerFragment extends DialogFragment implements
 			TimePickerDialog.OnTimeSetListener {
 
-		public static int currentHour24;
-		public static int currentMinute;
+		private int initial24Hour;
+		private int initialMinute;
+		private TextView timeTvToEdit;
+		private ActivityPojo updatedActivity;
 
-		public static void setTime(int currentHour, int currentMinute,
-				boolean isPM) {
+		public void init(TextView timeTextView, ActivityPojo receivedActivity,
+				int current12Hour, int currentMinute, boolean isAM) {
 
-			if (isPM) {
-				if (currentHour != 12) {
-					currentHour += 12;
-				}
-			} else {
-				if (currentHour == 12) {
-					currentHour -= 12;
-				}
-			}
-
-			TimePickerFragment.currentHour24 = currentHour;
-			TimePickerFragment.currentMinute = currentMinute;
+			this.timeTvToEdit = timeTextView;
+			this.updatedActivity = receivedActivity;
+			initial24Hour = to24HourClock(current12Hour, isAM);
+			this.initialMinute = currentMinute;
 
 		}
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-			return new TimePickerDialog(getActivity(), null, currentHour24,
-					currentMinute, false);
+			return new TimePickerDialog(getActivity(), this, initial24Hour,
+					initialMinute, false);
 		}
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+			if (timeTvToEdit.getId() == R.id.start_time_textView) {
+				updatedActivity
+						.setStart_time(time24ToString(hourOfDay, minute));
+			} else if (timeTvToEdit.getId() == R.id.end_time_textView) {
+				updatedActivity.setEnd_time(time24ToString(hourOfDay, minute));
+			}
+			timeTvToEdit.setText(formatTime(Format.REMOVE_SECONDS, time24ToString(hourOfDay, minute)));
 		}
 	}
 
@@ -172,15 +198,15 @@ public class DetailsActivity extends FragmentActivity {
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		builder.setView(input);
 
-		// Set up the buttons
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				details.setText(input.getText().length() == 0 ? "none" : input
-						.getText());
-				updatedActivity.setDetails(input.getText().toString());
-			}
-		});
+		builder.setPositiveButton("Save",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						details.setText(input.getText().length() == 0 ? "none"
+								: input.getText());
+						updatedActivity.setDetails(input.getText().toString());
+					}
+				});
 		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					@Override

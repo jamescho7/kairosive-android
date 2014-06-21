@@ -14,8 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.kairosive.kairosive.database.ActivityPojo;
-import com.kairosive.kairosive.database.DatabaseHandler;
+import com.kairosive.database.ActivityPojo;
+import com.kairosive.database.DatabaseHandler;
 
 public class SummaryActivity extends Activity {
 	private DatabaseHandler db;

@@ -21,8 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kairosive.kairosive.database.ActivityPojo;
-import com.kairosive.kairosive.database.DatabaseHandler;
+import com.kairosive.database.ActivityPojo;
+import com.kairosive.database.DatabaseHandler;
 
 public class LogActivity extends FragmentActivity {
 

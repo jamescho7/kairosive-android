@@ -1,12 +1,30 @@
-package com.kairosive.kairosive.database;
+package com.kairosive.database;
+
+import static com.kairosive.utils.KSTimeUtils.compareActivities;
 
 import java.io.Serializable;
 
+import com.kairosive.utils.Constants;
+
+/**
+ * Encapsulates all the information required to store one recorded "user activity."
+ * @author James Cho
+ *
+ */
+/**
+ * @author James
+ *
+ */
+/**
+ * @author James
+ *
+ */
+/**
+ * @author James
+ *
+ */
 public class ActivityPojo implements Serializable, Comparable<ActivityPojo> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5362382541309833581L;
 	private int mId;
 	private int mCategory_id;
@@ -33,6 +51,11 @@ public class ActivityPojo implements Serializable, Comparable<ActivityPojo> {
 		this.mDetails = details;
 	}
 
+	
+	/**
+	 * @param categoryId
+	 * @return
+	 */
 	private String catToString(int categoryId) {
 		return Constants.category[categoryId];
 	}
@@ -149,51 +172,12 @@ public class ActivityPojo implements Serializable, Comparable<ActivityPojo> {
 
 	@Override
 	public int compareTo(ActivityPojo another) {
-
-		if (this.equals(another)) {
-			return 0;
-		}
-
-		int mHour = Integer.parseInt(getStart_time().substring(0, 2));
-		int mMinutes = Integer.parseInt(getStart_time().substring(3, 5));
-		int mSeconds = Integer.parseInt(getStart_time().substring(6, 8));
-		boolean mIsAM = getStart_time().substring(9, 11).equals("am") ? true
-				: false;
-
-		int anotherHour = Integer.parseInt(another.getStart_time().substring(0,
-				2));
-		int anotherMinutes = Integer.parseInt(another.getStart_time()
-				.substring(3, 5));
-		int anotherSeconds = Integer.parseInt(another.getStart_time()
-				.substring(6, 8));
-		boolean anotherIsAM = another.getStart_time().substring(9, 11)
-				.equals("am") ? true : false;
-
-		if (mIsAM != anotherIsAM) {
-			return mIsAM ? -1 : 1;
-		}
-
-		if (mHour != anotherHour) {
-			return mHour - anotherHour;
-		}
-
-		if (mMinutes != anotherMinutes) {
-			return mMinutes - anotherMinutes;
-		}
-
-		if (mSeconds != anotherSeconds) {
-			return mSeconds - anotherSeconds;
-		}
-
-		return 0;
-
+		return compareActivities(this, another);
 	}
 
 	public ActivityPojo clone() {
-		ActivityPojo activity = new ActivityPojo(this.mCategory_id,
-				this.mStart_date, this.mStart_time, this.mEnd_date,
-				this.mEnd_time, this.mDetails);
-		activity.setId(getId());
-		return activity;
+		return new ActivityPojo(getId(), getCategory_id(), getStart_date(),
+				getStart_time(), getEnd_date(), getEnd_time(), getDetails());
 	}
+
 }

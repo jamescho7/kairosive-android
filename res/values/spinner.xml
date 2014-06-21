@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="categories_array">
+        <item>Personal</item>
+        <item>Work</item>
+        <item>Family</item>
+        <item>Relationships</item>
+        <item>Religious</item>
+    </string-array>
+
+</resources>

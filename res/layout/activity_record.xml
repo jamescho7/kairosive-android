@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5D656C"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".RecordActivity" >
+
+    <TextView
+        android:id="@+id/currentActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_current"
+        android:layout_centerHorizontal="true"
+        android:text="activity"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#EEEEEE"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/header_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="Current Activity"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/detailsBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_details"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="#DDDDDD"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/header_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTime"
+        android:layout_centerHorizontal="true"
+        android:text="Details"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_startTime"
+        android:layout_centerHorizontal="true"
+        android:text="12:10 pm"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#EEEEEE" />
+
+    <TextView
+        android:id="@+id/header_startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currentActivity"
+        android:layout_centerHorizontal="true"
+        android:text="Start Time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="0"
+        android:paddingBottom="30dip"
+        android:paddingTop="30dip"
+        android:textColor="#FFFFFF"
+        android:textSize="70dp" />
+
+    <Button
+        android:id="@+id/button_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_finish"
+        android:layout_alignBottom="@+id/button_finish"
+        android:layout_marginRight="6dp"
+        android:layout_toLeftOf="@+id/button_finish"
+        android:background="@drawable/button_blue_selector"
+        android:text="Share"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_finish"
+        android:layout_alignBottom="@+id/button_finish"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@+id/button_finish"
+        android:background="@drawable/button_red_selector"
+        android:text="Cancel"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_finish"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/header_startTime"
+        android:layout_marginBottom="37dp"
+        android:background="@drawable/button_green_selector"
+        android:text="Finish"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+</RelativeLayout>

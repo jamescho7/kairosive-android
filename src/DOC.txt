@@ -1,0 +1,17 @@
+DOCUMENTATION
+
+Kairosive:
+
+Tables:
+
+1. Daily Activities
+
+   Field Type Key
+1. id, INT, PRI. 	 # Unique sequentially generated ID for each activity
+2. categpry_id, INT. # Type of activity (from 21 choices)
+3. start_date, TEXT. # "yyyy/mm/dd" format
+4. start_time, TEXT. # hh:mm:ss:am or hh:mm:ss:pm
+5. end_date, Text.   # "yyyy/mm/dd" format
+6. end_time, TEXT. 	 # hh:mm:ss:am or hh:mm:ss:pm
+7. details, TEXT.    # Optional comments.
+

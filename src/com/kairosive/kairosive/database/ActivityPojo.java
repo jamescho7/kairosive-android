@@ -2,7 +2,7 @@ package com.kairosive.kairosive.database;
 
 import java.io.Serializable;
 
-public class ActivityPojo implements Serializable {
+public class ActivityPojo implements Serializable, Comparable<ActivityPojo> {
 
 	/**
 	 * 
@@ -139,12 +139,58 @@ public class ActivityPojo implements Serializable {
 		}
 	}
 
-	public String getmCategory_str() {
+	public String getCategory_str() {
 		return mCategory_str;
 	}
 
-	public void setmCategory_str(String mCategory_str) {
+	public void setCategory_str(String mCategory_str) {
 		this.mCategory_str = mCategory_str;
+	}
+
+	@Override
+	public int compareTo(ActivityPojo another) {
+
+		if (this.equals(another)) {
+			return 0;
+		}
+
+		int mHour = Integer.parseInt(getStart_time().substring(0, 2));
+		int mMinutes = Integer.parseInt(getStart_time().substring(3, 5));
+		int mSeconds = Integer.parseInt(getStart_time().substring(6, 8));
+		boolean mIsAM = getStart_time().substring(9, 11).equals("am") ? true
+				: false;
+
+		int anotherHour = Integer.parseInt(another.getStart_time().substring(0,
+				2));
+		int anotherMinutes = Integer.parseInt(another.getStart_time()
+				.substring(3, 5));
+		int anotherSeconds = Integer.parseInt(another.getStart_time()
+				.substring(6, 8));
+		boolean anotherIsAM = another.getStart_time().substring(9, 11)
+				.equals("am") ? true : false;
+
+		System.out.printf("COMPARING %d:%d:%d:%s to %d:%d:%d:%s\n", mHour,
+				mMinutes, mSeconds, mIsAM, anotherHour, anotherMinutes,
+				anotherSeconds, anotherIsAM);
+
+		if (mIsAM != anotherIsAM) {
+			return mIsAM ? -1 : 1;
+		}
+
+		if (mHour != anotherHour) {
+			return mHour - anotherHour;
+		}
+
+		if (mMinutes != anotherMinutes) {
+			return mMinutes - anotherMinutes;
+		}
+
+		if (mSeconds != anotherSeconds) {
+			return mSeconds - anotherSeconds;
+		}
+
+		return 0;
+
 	}
 
 }

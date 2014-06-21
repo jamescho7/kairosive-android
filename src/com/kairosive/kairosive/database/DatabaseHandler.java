@@ -112,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				ActivityPojo activity = new ActivityPojo();
 				activity.setId(Integer.parseInt(cursor.getString(0)));
 				activity.setCategory_id(Integer.parseInt(cursor.getString(1)));
-				activity.setmCategory_str(cursor.getString(2));
+				activity.setCategory_str(cursor.getString(2));
 				activity.setStart_date(cursor.getString(3));
 				activity.setStart_time(cursor.getString(4));
 				activity.setEnd_date(cursor.getString(5));
@@ -141,7 +141,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(KEY_CATEGORY_ID, activity.getCategory_id());
-		values.put(KEY_CATEGORY_STRING, activity.getmCategory_str());
+		values.put(KEY_CATEGORY_STRING, activity.getCategory_str());
 		values.put(KEY_START_DATE, activity.getStart_date());
 		values.put(KEY_START_TIME, activity.getStart_time());
 		values.put(KEY_END_DATE, activity.getEnd_date());

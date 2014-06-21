@@ -2,6 +2,7 @@ package com.kairosive.kairosive;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.DatePickerDialog;
@@ -14,7 +15,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ListView;
@@ -121,13 +121,19 @@ public class LogActivity extends FragmentActivity {
 
 	private String[] getActivities(String desiredDate) {
 		List<ActivityPojo> activities = db.getAllActivities();
+		allActivities.clear();
 		List<String> acts = new ArrayList<String>();
 		for (ActivityPojo act : activities) {
 			if (desiredDate.equals(act.getStart_date())) {
-				acts.add(act.toString());
 				allActivities.add(act);
 			}
 		}
+
+		Collections.sort(allActivities);
+		for (ActivityPojo act : allActivities) {
+			acts.add(act.toString());
+		}
+
 		String[] result = new String[acts.size()];
 		result = acts.toArray(result);
 		return result;
